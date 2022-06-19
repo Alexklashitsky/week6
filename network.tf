@@ -145,7 +145,7 @@ resource "azurerm_network_interface" "appNic" {
     name                          = "appNic"
     subnet_id                     = azurerm_subnet.public.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.0.0.4"
+    private_ip_address            = "10.0.0.40"
     public_ip_address_id          = azurerm_public_ip.publicIpApp.id
 
   }

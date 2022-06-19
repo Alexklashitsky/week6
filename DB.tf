@@ -1,7 +1,7 @@
 # ppostgresql server
 
 resource "azurerm_postgresql_flexible_server" "psqlservice" {
-  name                   = "psqlservice"
+  name                   = var.dbname_stage
   resource_group_name    = azurerm_resource_group.rg.name
   location               = var.location
   version                = "13"

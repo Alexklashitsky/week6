@@ -1,6 +1,18 @@
 variable "resource_group_name" {
+  default = "week6-prod"
+}
+variable "resource_group_name_stage" {
   default = "week6-stage"
 }
+
+variable "dbname_prod" {
+  default = "psqlservice"
+}
+variable "dbname_stage" {
+
+  default = "psqlservice-stage"
+}
+
 
 # variable "resource_group_name" {
 #   default = "test3"
