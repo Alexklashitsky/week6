@@ -1,0 +1,47 @@
+---
+- hosts: servers
+  become: yes
+  gather_facts: no
+  vars:
+      git_repo_url: https://github.com/Alexklashitsky/bootcamp-app.git
+      repo_path: /etc/www
+      repo_branch: master
+  tasks: 
+  - name: Run the equivalent of "apt-get update" as a separate step
+    apt:
+     update_cache: yes
+  - name: Ansible shell module multiple commands
+    shell: 'curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -'
+  - name: Install reqired packages
+    apt: name={{ item }} state=present
+    with_items:
+      - git
+      - nodejs
+  # - name: Clone a private repository
+  #   git:
+  #     repo: "{{ git_repo_url }}"
+  #     dest: "{{ repo_path }}"
+  #       # version: "{{ repo_branch }}"
+  #     accept_hostkey: yes
+  - name: Build app
+    command: sudo npm i
+    args:
+      chdir: "{{ repo_path }}"
+  - name:  pm2 install
+    npm:
+      name: pm2 
+      global: yes
+  # - name: delete existing pm2 processes if running
+  #   command: "pm2 kill"
+  #   ignore_errors: True
+    # become: yes
+    # become_user: rw_user
+  - name: start pm2 process
+    command: 'pm2 start /etc/www/src/index.js'
+    become: yes
+    become_user: rw_user
+    # environment:
+    # NODE_ENV: "{{server_env}}"
+
+
+
